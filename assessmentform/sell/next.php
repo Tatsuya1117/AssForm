@@ -1,4 +1,8 @@
-
+<?php
+if(isset($_POST['home4u_prefecture'])) {
+	$home4u_prefecture = $_POST['home4u_prefecture'];
+}
+?>
 <!DOCTYPE html>
 <html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
@@ -111,12 +115,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
  
 <p>■都道府県<br>
 <span class="inlineWrap">
-<select name="prefecture_code" class="def">
-<?php 
-htmlspecialchars(@$_POST['name'], ENT_QUOTES, 'UTF-8');
-?>
-<!-- <select name="prefecture_code" class="def" data-custom-select> -->
-<option value="">お選びください</option>
+<select name="prefecture_code" class="def" data-custom-select>
+<option value=""><?php echo $home4u_prefecture; ?></option>
 <optgroup label="関東エリア">
 <option value="13">東京都</option>
 <option value="14">神奈川県</option>

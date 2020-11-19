@@ -1,4 +1,16 @@
-
+<?php
+//h()関数(エスケープ処理のユーザー定義関数)を宣言
+function h($str) {
+	return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+}
+if (isset($_POST['text_input'])) {
+	//$_POST['text_input']が既に定義されている(値が送信されている)場合
+	$text_input = h($_POST['text_input']);
+	} else {
+		//値がまだ送信されていない(定義されていない)場合
+		$text_input = "";
+	}
+?>
 <!DOCTYPE html>
 <html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
@@ -11,7 +23,7 @@
 <meta name="robots" content="index,follow" />
 
 <!-- 重複コンテンツに配慮し、正しいページはどれか伝えるための表記 -->
-<link rel="canonical" href="https://www.home4u.jp/sell/">
+<link rel="canonical" href="https://example/">
 <!-- コンテンツを先読みさせるために必要な表記 -->
 <link rel="preload" href="/sell/img/sell_kv@sp.png" as="image">
 
@@ -46,13 +58,12 @@
 <dd class="sellKvAssFormAddr">
 <dl class="sellKvAssForm">
 <form id="assessForm" action="next.php" method="post">
-	<!-- <form id="assessForm" onsubmit="return submitHome4uAreaForm(this)"> -->
+<!-- バリデーションしたい場合は以下を有効化　<form id="assessForm" onsubmit="return submitHome4uAreaForm(this)"> -->
 <dd class="sellKvAssFormSelect">
 <select name="home4u_prefecture" class="kvAssSelect" data-custom-select custom-accent="1" >
-<option value="0">都道府県を選択</option>
-
-<optgroup label="関東エリア">
-	<option value="13">東京都</option>
+<option value="0">地域を選択</option>
+<optgroup label="岡山エリア">
+	<option value="岡山市">岡山市</option>
 	<option value="14">神奈川県</option>
 	<option value="11">埼玉県</option>
 	<option value="12">千葉県</option>
@@ -140,6 +151,7 @@
 <input type="hidden" name="user" value="home4u" />
 <dd class="sellKvAssFormSubmit">
 <div class="clearfix">
+<!-- 都道府県と市区町村のバリデーター -->
 <p class="sellKvAssFormETxt" name="prefecture_not_selected_error" >都道府県が選択されていません。</p>
 <p class="sellKvAssFormETxt" name="city_not_selected_error" >市区町村が選択されていません。</p>
 </div>
@@ -174,122 +186,9 @@
 
 <!-- js後読み -->
 <script src="/sell/js/common.js"></script>
-<script src="/sell/js/select_area_sell.js"></script>
+	<!-- <script src="/sell/js/select_area_sell.js"></script> -->
+<script src="/sell/js/area_control.js"></script>
 <script language="JavaScript" src="/sell/js/salesforceMA.js"></script>
 
-<!-- お知らせ -->
-<script>
- (function ($) {
- $(function () {
- $(".js-accordion-hook").on("click", function () {
- $(this).next().slideToggle();
- $(".icon-cross", this).toggleClass("icon-cross--close");
- });
- });
- })(jQuery);
-</script>
-
-<script type="text/javascript">
-$(function(){
-	$('.sellMakerList').each(function(){
-	var loopsliderWidth = $(this).width();
-	var loopsliderHeight = $(this).height();
-	$(this).children('ul').wrapAll('<div id="loopslider_wrap"></div>');
-
-	var listWidth = $('#loopslider_wrap').children('ul').children('li').width();
-	var listCount = $('#loopslider_wrap').children('ul').children('li').length;
-
-	var loopWidth = (listWidth)*(listCount);
-
-	$('#loopslider_wrap').css({
-	top: '0',
-	left: '0',
-	width: ((loopWidth) * 2),
-	height: (loopsliderHeight),
-	overflow: 'hidden',
-	position: 'relative'
-	});
-
-	$('#loopslider_wrap ul').css({
-	width: (loopWidth)
-	});
-	loopsliderPosition();
-
-	function loopsliderPosition(){
-	$('#loopslider_wrap').css({left:'0'});
-	$('#loopslider_wrap').stop().animate({left:'-' + (loopWidth) + 'px'},25000,'linear');
-	setTimeout(function(){
-	loopsliderPosition();
-	},25000);
-	};
-
-	$('#loopslider_wrap ul').clone().appendTo('#loopslider_wrap');
-	});
-});
-
-</script>
-
-<!-- Yahoo Code for your Target List -->
-<script type="text/javascript" language="javascript">
-/* <![CDATA[ */
-var yahoo_retargeting_id = 'ZYMD8US1YO';
-var yahoo_retargeting_label = '';
-var yahoo_retargeting_page_type = '';
-var yahoo_retargeting_items = [{item_id: '', category_id: '', price: '', quantity: ''}];
-/* ]]> */
-</script>
-<script type="text/javascript" language="javascript" src="//b92.yahoo.co.jp/js/s_retargeting.js"></script>
-
-<!-- Google Code for &#22770;&#21364;&#26619;&#23450;&#12522;&#12510;&#12540;&#12465;&#12486;&#12451;&#12531;&#12464;&#12479;&#12464; -->
-<!-- Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. For instructions on adding this tag and more information on the above requirements, read the setup guide: google.com/ads/remarketingsetup -->
-<script type="text/javascript">
-/* <![CDATA[ */
-var google_conversion_id = 1070052758;
-var google_conversion_label = "jhsKCL6XtgMQluue_gM";
-var google_custom_params = window.google_tag_params;
-var google_remarketing_only = true;
-/* ]]> */
-</script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-</script>
-<noscript>
-<div style="display:inline;">
-<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1070052758/?value=0&amp;label=jhsKCL6XtgMQluue_gM&amp;guid=ON&amp;script=0"/>
-</div>
-</noscript>
-
-<div id="owners">
-<script src="/sell/js/owners/history_service.js"></script>
-<script defer>
-<!--
- if (typeof $ !== 'function') {
- var script = document.createElement('script');
- script.src = '/js/jquery-1.11.1.min.js';
- document.head.appendChild(script);
- 
- script.onload = script.onreadystatechange = function() {
- addServiceFlag();
- script.onload = script.onreadystatechange = null;
- }
- } else {
- addServiceFlag();
- }
- -->
-</script>
-</div>
-<!-- START Yahoo tagmanager -->
-<script type="text/javascript">
- (function () {
- var tagjs = document.createElement("script");
- var s = document.getElementsByTagName("script")[0];
- tagjs.async = true;
- tagjs.src = "//s.yjtag.jp/tag.js#site=7Oplhom";
- s.parentNode.insertBefore(tagjs, s);
- }());
-</script>
-<noscript>
-<iframe src="//b.yjtag.jp/iframe?c=7Oplhom" width="1" height="1" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-</noscript>
-<!-- END Yahoo tagmanager -->
 </body>
 </html>
